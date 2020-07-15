@@ -13,14 +13,15 @@ public class UserDTO {
     private String userId;
     private String pw;
     private String name;
-    //private Date joinDate;
+    private Date join_date;
+    private int auth;
 
-    public UserDTO(String userId, String pw , String name){
+    public UserDTO(String userId, String pw , String name,Date join_date,int auth){
         this.userId = userId;
         this.pw = pw;
         this.name = name;
-        //this.joinDate = joinDate;
+        this.join_date = join_date;
+        this.auth = auth;
     }
-
 
 }
