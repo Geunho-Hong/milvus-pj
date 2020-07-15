@@ -14,9 +14,9 @@ public class UserDTO {
     private String pw;
     private String name;
     private Date join_date;
-    private int auth;
+    private Integer auth;
 
-    public UserDTO(String userId, String pw , String name,Date join_date,int auth){
+    public UserDTO(String userId, String pw, String name ,Date join_date ,Integer auth){
         this.userId = userId;
         this.pw = pw;
         this.name = name;

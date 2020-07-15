@@ -4,10 +4,35 @@
 
 <mapper namespace="mapper.UserMapper">
 
+    <select id="login" resultType="UserDTO">
+        select * from tbl_user
+        where userId = #{userId} and pw = #{pw}
+    </select>
+
     <insert id="insertMember">
         insert into tbl_user(userId,pw,name)
         values(#{userId},#{pw},#{name})
     </insert>
+
+    <select id = "getUserId">
+        select userId from tbl_user
+        where userId = #{userId}
+    </select>
+
+    <select id = "getUserPw">
+        select pw from tbl_user
+        where userId = #{userId}
+    </select>
+
+    <delete id = "deleteMember">
+        delete * from tbl_user where pw = #{pw}
+    </delete>
+
+    <update id="changePw">
+        update pw from tbl_user
+        set pw = #{pw}
+        where userId = #{userId}
+    </update>
 
 </mapper>
 

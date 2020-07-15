@@ -1,0 +1,36 @@
+#container{
+    margin-left: 22%;
+}
+
+#registerForm{
+    text-align: center;
+    margin-top: 100px;
+}
+
+#title{
+    text-align: center;
+    margin-top: 100px;
+    font-size : 40px;
+    font-weight: bold;
+}
+
+#submitBtn{
+    margin-top: 75px;
+    width:300px;
+    height:50px;
+}
+
+#userId{
+    width:300px;
+    height: 50px;
+}
+
+#pw{
+    width:300px;
+    height: 50px;
+}
+
+#name{
+    width:300px;
+    height: 50px;
+}

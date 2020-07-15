@@ -1,19 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: milvus_omnilab_2
-  Date: 2020-07-14
-  Time: 오전 11:23
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script src = "https://code.jquery.com/jquery-3.1.1.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link href="/css/register.css" rel="stylesheet">
 <html>
 <head>
     <title>Title</title>
-    Let's Start Milvus Project
-    Hello !!
-    밀버스에 오신것을 환영합니다.
+
 </head>
 <body>
+    <%@ include file="sidebar.jsp"%>
+
+    <div class ="container">
+        <div class ="row">
+            안녕하세요
+       </div>
+    </div>
+
 
 </body>
 </html>
