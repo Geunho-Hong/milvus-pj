@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDTO login(LoginDTO loginDTO) {
-        log.info("userDTO Login Data " + userDAO.login(loginDTO));
+        log.info("Login Data " + userDAO.login(loginDTO));
         return userDAO.login(loginDTO);
     }
 

@@ -13,10 +13,9 @@
 
     <div class ="container">
         <div class ="row">
-            안녕하세요
+            안녕하세요 ${login.userId} 님 환영합니다 !
        </div>
     </div>
-
 
 </body>
 </html>

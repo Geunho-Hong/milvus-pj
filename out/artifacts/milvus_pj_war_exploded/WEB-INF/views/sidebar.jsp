@@ -15,7 +15,7 @@
     <div class="row title">
         <div class="col-md-12">
             <h1 class="title2">
-                <b>Milvus Project</b>
+                <b><a href="/">Milvus Project</a></b>
             </h1>
         </div>
     </div>
@@ -37,19 +37,21 @@
                     <button type ="button" class ="btn btn-primary" onclick="location.href='/user/logout'">LogOut</button>
                     <button class="btn btn-primary"  onclick="location.href='/user/mypage'">MyPage</button>
                 </c:if>
-                <button type ="button" id ="registerBtn" class ="btn btn-primary" onclick="location.href='/user/register'">회원가입</button>
+                <c:if test = "${login eq null}">
+                    <button type ="button" id ="registerBtn" class ="btn btn-primary" onclick="location.href='/user/register'">회원가입</button>
+                </c:if>
         </div>
     </div>
 
     <div class="row info">
-        <div class="col-md-12 font-12">
+        <%--<div class="col-md-12 font-12">
             <button type ="button" id="noticeBtn" class ="btn btn-primary" onclick="location.href='/user/login'">공지게시판</button>
-        </div>
+        </div>--%>
     </div>
 
     <div class="row info">
         <div class="col-md-12 font-12">
-            <button type ="button" id="qnaBtn" class ="btn btn-primary" onclick="location.href='/user/login'">질문 게시판</button>
+            <button type ="button" id="qnaBtn" class ="btn btn-primary" onclick="location.href='/discussion/list'">토론 게시판</button>
         </div>
     </div>
 
