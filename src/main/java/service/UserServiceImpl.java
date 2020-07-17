@@ -1,10 +1,14 @@
 package service;
 
 import dao.UserDAO;
+import domain.Criteria;
 import domain.LoginDTO;
 import domain.UserDTO;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /*
  *  Constructor Based Injection 장점
@@ -36,18 +40,28 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDTO getUserId(UserDTO userDTO) {
-        return userDTO;
+        return userDAO.getUserId(userDTO);
     }
 
     public boolean getUserPw(UserDTO userDTO) {
         return false;
     }
 
-    public int deleteMember(UserDTO userDTO) {
-        return 0;
+    public int deleteAllMember(String string) {
+        userDAO.deleteAllMember(string);
+        return 1;
     }
 
     public int changeUserPw(UserDTO userDTO) {
-        return 0;
+        userDAO.changeUserPw(userDTO);
+        return 1;
+    }
+
+    public List<UserDTO> getUserList(Criteria cri) {
+        return userDAO.getUserList(cri);
+    }
+
+    public int totalCount(Criteria cri) {
+        return userDAO.totalCount(cri);
     }
 }

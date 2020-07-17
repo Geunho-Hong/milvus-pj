@@ -14,7 +14,7 @@
         values(#{userId},#{pw},#{name})
     </insert>
 
-    <select id = "getUserId">
+    <select id = "getUserId" resultType="UserDTO">
         select userId from tbl_user
         where userId = #{userId}
     </select>
@@ -25,14 +25,34 @@
     </select>
 
     <delete id = "deleteMember">
-        delete * from tbl_user where pw = #{pw}
+        delete from tbl_user where pw = #{pw}
+    </delete>
+
+    <delete id ="deleteAllMember" parameterType="String">
+        delete from tbl_user
+        where userId = #{userId}
     </delete>
 
     <update id="changePw">
-        update pw from tbl_user
+        update tbl_user
         set pw = #{pw}
         where userId = #{userId}
     </update>
+
+    <select id ="getUserList" resultType ="UserDTO">
+        <![CDATA[
+		select * from
+			tbl_user
+		]]>
+        <![CDATA[
+		order by name desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
+    </select>
+
+    <select id ="totalCount" resultType="int">
+        select count(*) from tbl_user
+    </select>
 
 </mapper>
 

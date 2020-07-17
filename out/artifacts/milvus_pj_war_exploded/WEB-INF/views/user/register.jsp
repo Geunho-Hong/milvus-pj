@@ -18,8 +18,9 @@
         <div>
             <form action ="/user/register" method="post" id="userForm">
                 <div id ="registerForm">
-                    <div>
+                    <div id ="idDiv">
                        <input type = "text" name = "userId" id ="userId" placeholder="아이디">
+                        <button type="button" id="checkBtn">Id check</button>
                     </div>
                     <div>
                        <input type = "password"  name = "pw" id ="pw" placeholder="패스워드">
@@ -33,12 +34,13 @@
                 </div>
             </form>
         </div>
-
 </body>
 <script type ="text/javascript">
     $(document).ready(function(){
 
         var userForm = $("#userForm");
+
+        var idCheck = 0;
 
         $("#submitBtn").click(function(e){
 
@@ -78,9 +80,13 @@
                 $("#pw").focus();
                 return false;
             }
-            if(name.length <1 || pw.length >5){
+            if(name.length <1 && pw.length >5){
                 alert("이름은 2자 이상 4자 이하를 입력해주세요.")
                 $("#name").focus();
+                return false;
+            }
+            if(idCheck == 0){
+                alert("아이디 중복 체크가 필요합니다");
                 return false;
             }
             userForm.submit();
@@ -111,6 +117,40 @@
             }
         };
 
+        $("#checkBtn").click(function (e) {
+
+            var userId = $("#userId").val();
+            console.log(userId);
+
+            if(userId == ''  || userId == null){
+                alert("아이디를 입력해 주세요");
+                return false;
+            }
+
+            var userDTO = {
+                userId : userId
+            };
+
+            $.ajax({
+                type : 'post',
+                url : '/user/checkId',
+                data : JSON.stringify(userDTO),
+                dataType:"json",
+                contentType : 'application/json; charset=utf-8',
+                success : function(data){
+                    console.log("Data" + data);
+                    if(data == 1){
+                        alert("이미 있는 아이디 입니다");
+                        idCheck = 0;
+                        return false;
+                    }else {
+                        alert("사용 가능한 아이디 입니다");
+                        idCheck = 1;
+                        return true;
+                    }
+                }
+            })
+        })
     });
 </script>
 

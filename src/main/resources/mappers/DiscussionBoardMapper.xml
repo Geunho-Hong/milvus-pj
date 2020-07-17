@@ -50,4 +50,27 @@
         SELECT COUNT(*) FROM tbl_discussion_board;
     </select>
 
+
+    <insert id ="insertReply">
+		insert into tbl_reply_discussion(bno,userId,content)
+		values(#{bno},#{userId},#{content})
+	</insert>
+
+    <delete id ="deleteReply">
+		delete from tbl_reply_discussion
+		where rno = #{rno}
+	</delete>
+
+    <select id ="getReplyList" resultType ="DiscussionReplyDTO">
+		select rno,bno,userId,content,regdate
+		from tbl_reply_discussion
+		where bno = #{bno}
+		order by rno desc
+	</select>
+
+    <delete id ="deleteAllReply">
+		delete from tbl_reply_discussion
+		where bno = #{bno}
+	</delete>
+
 </mapper>

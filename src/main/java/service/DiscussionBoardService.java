@@ -2,6 +2,7 @@ package service;
 
 import domain.Criteria;
 import domain.DiscussionBoardDTO;
+import domain.DiscussionReplyDTO;
 
 import java.util.List;
 
@@ -19,7 +20,11 @@ public interface DiscussionBoardService {
 
     public int countBoard(Criteria cri);
 
-    public List<DiscussionBoardDTO> list();
-
     public List<DiscussionBoardDTO> getListWithPaging(Criteria cri);
+
+    public void insertReply(DiscussionReplyDTO discussionReplyBoardDTO);
+
+    public void deleteReply(int rno);
+
+    public List<DiscussionReplyDTO> getReplyList(int bno);
 }

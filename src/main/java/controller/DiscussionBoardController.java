@@ -2,12 +2,16 @@ package controller;
 
 import domain.Criteria;
 import domain.DiscussionBoardDTO;
+import domain.DiscussionReplyDTO;
 import domain.PageDTO;
 import lombok.extern.log4j.Log4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.DiscussionBoardService;
+import java.util.List;
 
 @Log4j
 @Controller
@@ -72,10 +76,38 @@ public class DiscussionBoardController {
         return "redirect:/discussion/list";
     }
 
-    @GetMapping("/board/all/delete")
-    public String deleteAllBoard(){
-        /*int[] checkArr =*/
-        return "1";
+    @ResponseBody
+    @PostMapping("/board/checked/delete")
+    public int deleteAllBoard(@RequestParam(value = "checkArr[]") List<String> checkArr){
+        log.info("delete Checked Board " + checkArr);
+
+        for(String index : checkArr){
+            int bno = Integer.parseInt(index);
+            discussionBoardService.delete(bno);
+        }
+        return 1;
+    }
+
+    @ResponseBody
+    @PostMapping("/reply/register")
+    public void insertReply(@RequestBody DiscussionReplyDTO discussionReplyDTO){
+        log.info("insertReply " + discussionReplyDTO.toString());
+        discussionBoardService.insertReply(discussionReplyDTO);
+    }
+
+    @ResponseBody
+    @GetMapping("/reply/{bno}")
+    public List<DiscussionReplyDTO> replyList(@PathVariable("bno")int bno){
+        log.info("조회할 댓글 게시판 " +  bno);
+        return discussionBoardService.getReplyList(bno);
+    }
+
+    @ResponseBody
+    @PostMapping("/delete/reply/{rno}")
+    public ResponseEntity<String> deleteReply(@PathVariable("rno") int rno){
+        log.info("Delete Reply" + rno);
+        discussionBoardService.deleteReply(rno);
+        return new ResponseEntity("Success", HttpStatus.OK);
     }
 
 

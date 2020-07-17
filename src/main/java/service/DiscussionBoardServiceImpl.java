@@ -3,6 +3,7 @@ package service;
 import dao.DiscussionBoardDAO;
 import domain.Criteria;
 import domain.DiscussionBoardDTO;
+import domain.DiscussionReplyDTO;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -53,5 +54,18 @@ public class DiscussionBoardServiceImpl implements DiscussionBoardService {
 
     public List<DiscussionBoardDTO> getListWithPaging(Criteria cri) {
         return discussionBoardDAO.getListWithPaging(cri);
+    }
+
+    public void insertReply(DiscussionReplyDTO discussionReplyBoardDTO) {
+        log.info("disCuss " + discussionReplyBoardDTO.toString());
+        discussionBoardDAO.insertReply(discussionReplyBoardDTO);
+    }
+
+    public void deleteReply(int rno) {
+        discussionBoardDAO.deleteReply(rno);
+    }
+
+    public List<DiscussionReplyDTO> getReplyList(int bno) {
+       return discussionBoardDAO.getReplyList(bno);
     }
 }

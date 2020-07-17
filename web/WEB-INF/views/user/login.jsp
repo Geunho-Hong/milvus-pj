@@ -24,7 +24,7 @@
         <div>
             <form action = "/user/login-post" method ="post" id="loginForm">
                 <div id="login-box">
-                    <div> <!--required pattern="a-zA-Z].+[0-9]" -->
+                    <div>
                         <input type="text" id="userId" name="userId"  placeholder="아이디">
                     </div>
                     <div>
@@ -33,9 +33,9 @@
                     <div>
                         <button type="button" id="login-btn">로그인</button>
                     </div>
-                    <div>
+                    <%--<div>
                         <button type="button" id="find-pwBtn">패스워드 찾기</button>
-                    </div>
+                    </div>--%>
                 </div>
             </form>
          </div>

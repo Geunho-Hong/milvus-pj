@@ -7,6 +7,7 @@
     <typeAliases>
         <typeAlias alias="UserDTO" type = "domain.UserDTO"/>
         <typeAlias alias="DiscussionBoardDTO" type = "domain.DiscussionBoardDTO"/>
+        <typeAlias alias="DiscussionReplyDTO" type = "domain.DiscussionReplyDTO"/>
     </typeAliases>
 
 </configuration>

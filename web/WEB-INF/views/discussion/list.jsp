@@ -25,22 +25,25 @@
         <thead>
         <tr>
             <th scope="col">글번호</th>
-            <th scope="col">제목</th>
             <th scope="col">작성자</th>
+            <th scope="col">제목</th>
             <th scope="col">작성일</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${list }" var="board">
             <tr>
-                <td>${board.bno}</td>
+                <td>${board.bno}
+                    <c:if test = "${login.auth eq 1}">
+                        <input type="checkbox" name="checkArr" class="checkArr" data = "${board.bno}"/>
+                     </c:if>
+                </td>
+                <td>${board.userId }</td>
                 <td>
                     <a href="/discussion/board/${board.bno}">
                         <c:out value="${board.title}"></c:out>
                     </a>
-                    <input type="checkbox" name="bno" data = "${board.bno}"/>
                 </td>
-                <td>${board.userId }</td>
                 <td>${board.regdate }</td>
             </tr>
         </c:forEach>
@@ -73,7 +76,7 @@
     </c:if>
 
     <c:if test = "${login.auth eq 1}">
-        <button type="button" id="deleteCheckBtn">체크 삭제</button>
+        <button type="button" id="deleteBtn">체크 삭제</button>
     </c:if>
 
     <form id="actionForm" action="/discussion/list" method="get">
@@ -91,7 +94,7 @@
         $('.paginate_button a').on("click",function(e){
             e.preventDefault();
 
-            var targetPage = $(this).attr("href");
+            //var targetPage = $(this).attr("href");
 
             var actionForm = $("#actionForm");
 
@@ -100,18 +103,39 @@
             actionForm.submit();
         });
 
-        $("#deleteCheckBtn").click(function (e) {
-            var confirm = "체크 리스트를 삭제하시겠습니까?";
+        $("#deleteBtn").click(function(e) {
 
-            if(confirm){
-                var checkArr = new Array();
-                $("input[name='bno']:checked").each(function () {
-                    checkArr.push($(this).attr("data"));
-                })
+            var result = confirm("체크 리스트를 삭제하시겠습니까?");
+
+            if($("input[name='checkArr']").is(":checked") == false){
+                alert("삭제할 게시글을 선택해 주세요");
+                return false;
             }
 
-            console.log(checkArr);
-            /*onclick = "location.href = '/discussion/board/all/delete'";*/
+            if(result){
+
+                var checkArr = new Array();
+
+                $("input[name='checkArr']:checked").each(function () {
+                    checkArr.push($(this).attr("data"));
+                });
+
+                console.log(checkArr);
+
+               $.ajax({
+                    type: 'post',
+                    url : "/discussion/board/checked/delete",
+                    data: ({'checkArr' : checkArr}),
+                    success : function(){
+                        if(result == 1){
+                            alert("삭제 성공");
+                            location.href = "/discussion/list";
+                        }else{
+                            alert("삭제 실패");
+                        }
+                    }
+                })
+            }
         });
     });
 </script>

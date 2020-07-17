@@ -2,6 +2,7 @@ package dao;
 
 import domain.Criteria;
 import domain.DiscussionBoardDTO;
+import domain.DiscussionReplyDTO;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -56,5 +57,25 @@ public class DiscussionBoardDAOImpl implements DiscussionBoardDAO {
     public List<DiscussionBoardDTO> getListWithPaging(Criteria cri) {
         log.info(sqlSession.selectList(namespace + ".getListWithPaging",cri));
         return sqlSession.selectList(namespace + ".getListWithPaging",cri);
+    }
+
+    public void insertReply(DiscussionReplyDTO discussionReplyBoardDTO) {
+        log.info("DAO insertReply "  + discussionReplyBoardDTO.toString());
+        sqlSession.insert(namespace + ".insertReply",discussionReplyBoardDTO);
+    }
+
+    public List<DiscussionReplyDTO> getReplyList(int bno){
+        List<DiscussionReplyDTO> getReplyList = sqlSession.selectList(namespace + ".getReplyList",bno);
+        log.info("조회 댓글 리스트 " + getReplyList);
+        return getReplyList;
+    }
+
+    public void deleteReply(int rno) {
+        log.info ("삭제할 댓글 번호 " + rno);
+        sqlSession.delete(namespace + ".deleteReply",rno);
+    }
+
+    public void deleteAllReply(int bno) {
+
     }
 }

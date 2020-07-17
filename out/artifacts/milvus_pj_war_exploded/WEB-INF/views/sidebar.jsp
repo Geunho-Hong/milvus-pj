@@ -23,7 +23,7 @@
     <div class="row info">
         <div class="col-md-12 font-12">
             <h3>
-                ${login.userId}
+                ${login.userId} 님 환영합니다
             </h3>
         </div>
     </div>
@@ -33,9 +33,12 @@
                 <c:if test="${login eq null}">
                     <button type ="button" id="loginBtn" class ="btn btn-primary" onclick="location.href='/user/login'">Login</button>
                 </c:if>
+                <c:if test="${login.auth eq 1}">
+                    <button type ="button" id="adminBtn" class ="btn btn-primary" onclick="location.href='/user/list'">유저목록</button>
+                </c:if>
                 <c:if test="${login ne null}">
                     <button type ="button" class ="btn btn-primary" onclick="location.href='/user/logout'">LogOut</button>
-                    <button class="btn btn-primary"  onclick="location.href='/user/mypage'">MyPage</button>
+                    <button class="btn btn-primary"  onclick="location.href='/user/modify'">비밀번호 수정</button>
                 </c:if>
                 <c:if test = "${login eq null}">
                     <button type ="button" id ="registerBtn" class ="btn btn-primary" onclick="location.href='/user/register'">회원가입</button>
@@ -56,8 +59,8 @@
     </div>
 
     <div class="row info">
-        <div class="col-md-12 font-12">
+        <%--<div class="col-md-12 font-12">
             <button type ="button" id="skillBtn" class ="btn btn-primary" onclick="location.href='/user/login'">My 개발 능력</button>
-        </div>
+        </div>--%>
     </div>
 </div>
