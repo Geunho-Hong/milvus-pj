@@ -1,5 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Maven template
+/out/
+.idea/modules/
+*.jar
+*.class
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -9,11 +14,7 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
-/out/
-.idea/modules/
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 
-*.class
-*.jar

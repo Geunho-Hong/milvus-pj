@@ -70,6 +70,8 @@ public class DiscussionBoardController {
     public String deleteBoard(@PathVariable String bno){
         log.info("삭제할 게시글 번호: " + bno);
         int result = discussionBoardService.delete(Integer.parseInt(bno));
+
+
         if(result == 1 ){
             log.info("삭제 성공");
         }else{
@@ -77,6 +79,14 @@ public class DiscussionBoardController {
         }
         return "redirect:/discussion/list";
     }
+
+    @PostMapping("/board/delete")
+    public String deleteBoard2(DiscussionBoardDTO boardDTO){
+        log.info("Discussion board delete " + boardDTO.toString());
+
+        return "1";
+    }
+
 
     @ResponseBody
     @PostMapping("/board/checked/delete")

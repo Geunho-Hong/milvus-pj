@@ -12,7 +12,9 @@
 
     <div class ="container"style="margin-left:22%">
         <form action ="/discussion/register" method ="post" id="writeForm" name="writeForm">
-            <input type = "hidden" name ="userId" value="${login.userId}"/>
+            <!--<input type = "hidden" name ="userId" value="${login.userId}"/>-- InterCeptor-->
+            <input type = "hidden" name ="userId" value="<sec:authentication property="principal.username"/>"/>
+
             <table class="board_view">
                 <colgroup>
                     <col width="15%" >
@@ -43,6 +45,7 @@
             <c:if test = "${login ne null}">
                 <button type="button" class="btn black" id="writeBtn">등록하기</button>
             </c:if>
+            <button type="button" class="btn black" id="writeBtn">등록하기</button>
         </div>
     </div>
 </body>

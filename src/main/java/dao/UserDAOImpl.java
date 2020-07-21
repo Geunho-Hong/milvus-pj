@@ -1,5 +1,6 @@
 package dao;
 
+import domain.AuthDTO;
 import domain.LoginDTO;
 import domain.UserDTO;
 import lombok.extern.log4j.Log4j;
@@ -27,8 +28,13 @@ public class UserDAOImpl implements UserDAO {
 
     public int insertMember(UserDTO userDTO){
         log.info("insertMember " + userDTO);
-        sqlSession.insert(namespace + ".insertMember",userDTO);
-        return 1;
+        return sqlSession.insert(namespace + ".insertMember",userDTO);
+    }
+
+    @Override
+    public int insertAuth(UserDTO userDTO) {
+        AuthDTO authUser = new AuthDTO(userDTO.getUserId(),"ROLE_MEMBER");
+        return sqlSession.insert(namespace + ".insertAuth",authUser);
     }
 
     public UserDTO getUserId(UserDTO userDTO) {

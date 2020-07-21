@@ -3,6 +3,7 @@ package service;
 import dao.UserDAO;
 import domain.LoginDTO;
 import domain.UserDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import service.Criteria;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
@@ -23,19 +24,40 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDAO userDAO){
+    public UserServiceImpl(UserDAO userDAO,BCryptPasswordEncoder passwordEncoder){
         this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDTO login(LoginDTO loginDTO) {
-        log.info("Login Data " + userDAO.login(loginDTO));
-        return userDAO.login(loginDTO);
+        log.info("LoginDTO " + loginDTO);
+        UserDTO loginUser = userDAO.login(loginDTO);
+        String rawPw = loginUser.getPw();
+        log.info("RawPw " + rawPw);
+        log.info("Login Data " + loginUser);
+        if(passwordEncoder.matches(loginDTO.getPw(),loginUser.getPw())){
+            log.info("계정 정보 일치");
+            return userDAO.login(loginDTO);
+        }else{
+            log.info("계정 정보 불일치");
+            return null;
+        }
     }
 
     public int insertMember(UserDTO userDTO) {
         int answer = 0;
-        userDAO.insertMember(userDTO);
+        String encyptPassword = passwordEncoder.encode(userDTO.getPw());
+        log.info("암호화 비밀번호 " + encyptPassword);
+        UserDTO registerUser = userDTO.builder()
+                .userId(userDTO.getUserId())
+                .pw(encyptPassword)
+                .name(userDTO.getName())
+                .build();
+        userDAO.insertMember(registerUser);
+        userDAO.insertAuth(userDTO);
+        log.info("InsertUser ");
         return answer = 1;
     }
 

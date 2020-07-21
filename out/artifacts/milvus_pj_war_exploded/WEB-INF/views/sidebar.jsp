@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src = "https://code.jquery.com/jquery-3.1.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -26,6 +27,9 @@
                 <c:if test = "${login ne null}">
                     안녕하세요 ${login.userId} 님 환영합니다 !
                 </c:if>
+
+          <%--      시큐리티 <sec:authentication property="principal.username"/>--%>
+
             </h3>
         </div>
     </div>
@@ -42,6 +46,10 @@
                     <button type ="button" class ="btn btn-primary" onclick="location.href='/user/logout'">LogOut</button>
                     <button class="btn btn-primary"  onclick="location.href='/user/modify'">비밀번호 수정</button>
                 </c:if>
+                <form action = "/user/log-out" method ="post">
+                    <input type ="hidden" name ="${_csrf.parameterName}" value ="${_csrf.token}" placeholder="시큐리티 out">
+                    <button>로그 아웃 시큐리티</button>
+                </form>
                 <c:if test = "${login eq null}">
                     <button type ="button" id ="registerBtn" class ="btn btn-primary" onclick="location.href='/user/register'">회원가입</button>
                 </c:if>

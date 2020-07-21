@@ -1,9 +1,12 @@
 package controller;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import domain.LoginDTO;
 import domain.PageDTO;
 import domain.UserDTO;
 import lombok.extern.log4j.Log4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Log4j
@@ -57,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/adminLogin")
-    public String adminLogin(String error, String logout, Model model){
+    public String adminLogin(String error, String logout, Model model, Principal principal){
         log.info("Error " + error);
         log.info("Logout " + logout);
 
@@ -108,6 +112,12 @@ public class UserController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+
+    // Security 전용 log-out 기능 , 차후에 수정 필요
+    @GetMapping("/log-out")
+    public void logout(){
+        log.info("Security Logout");
     }
 
     @ResponseBody

@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <script src="/js/discussion/list.js"/>
@@ -10,6 +11,13 @@
 <body>
 
 <%@ include file="../sidebar.jsp" %>
+
+<c:set var="security">
+
+</c:set>
+
+<sec:authentication property="principal.username"/>
+
 
 <div class="container" style="margin-left:22%">
 
@@ -76,6 +84,9 @@
     <c:if test="${login ne null}">
         <button type="button" onclick="location.href='/discussion/register'">글 작성</button>
     </c:if>
+
+
+    <sec:authentication property="principal.username"/>
 
     <c:if test = "${login.auth eq 1}">
         <button type="button" id="deleteBtn">체크 삭제</button>

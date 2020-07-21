@@ -46,9 +46,16 @@
        <c:if test = "${login.userId eq board.userId || login.auth eq 1}">
             <button type = "button" id ="deleteBtn"
                     onclick="location.href='/discussion/board/update/${board.bno}'">수정</button>
+
             <button type = "button" id ="deleteBtn"
                     onclick="location.href='/discussion/board/delete/${board.bno}'">삭제</button>
         </c:if>
+
+        <form action="/discussion/board/delete" method ="post">
+            <input type ="hidden" name ="userId" value ="${board.userId}"/>
+            <input type ="hidden" name ="bno" value ="${board.bno}"/>
+            <button>시큐리티 삭제</button>
+        </form>
 
         <table>
             <c:if test="${login eq null }">

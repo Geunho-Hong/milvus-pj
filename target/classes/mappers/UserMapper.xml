@@ -6,12 +6,17 @@
 
     <select id="login" resultType="UserDTO">
         select * from tbl_user
-        where userId = #{userId} and pw = #{pw}
+        where userId = #{userId}
     </select>
 
     <insert id="insertMember">
         insert into tbl_user(userId,pw,name)
         values(#{userId},#{pw},#{name})
+    </insert>
+
+    <insert id ="insertAuth">
+        insert into tbl_authorities
+        values(#{userId},#{auth})
     </insert>
 
     <select id = "getUserId" resultType="UserDTO">

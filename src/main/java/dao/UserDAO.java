@@ -1,5 +1,6 @@
 package dao;
 
+import domain.AuthDTO;
 import domain.LoginDTO;
 import domain.UserDTO;
 import service.Criteria;
@@ -12,6 +13,8 @@ public interface UserDAO {
     public UserDTO login(LoginDTO loginDTO);
 
     public int insertMember(UserDTO userDTO);
+
+    public int insertAuth(UserDTO authDTO);
 
     public UserDTO getUserId(UserDTO userDTO);
 

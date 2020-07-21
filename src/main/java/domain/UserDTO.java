@@ -1,9 +1,7 @@
 package domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
 import java.sql.Date;
 
 @Getter
@@ -19,6 +17,7 @@ public class UserDTO {
     private Integer auth;
     private String profileImg;
 
+    @Builder
     public UserDTO(String userId, String pw, String name ,Date join_date ,Integer auth
             ,String profileImg){
         this.userId = userId;
