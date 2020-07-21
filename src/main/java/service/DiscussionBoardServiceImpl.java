@@ -1,7 +1,6 @@
 package service;
 
 import dao.DiscussionBoardDAO;
-import domain.Criteria;
 import domain.DiscussionBoardDTO;
 import domain.DiscussionReplyDTO;
 import lombok.extern.log4j.Log4j;
@@ -30,17 +29,15 @@ public class DiscussionBoardServiceImpl implements DiscussionBoardService {
     }
 
     public int modify(DiscussionBoardDTO discussionBoardDTO) {
-        discussionBoardDAO.modify(discussionBoardDTO);
-        return 1;
+        return discussionBoardDAO.modify(discussionBoardDTO);
     }
 
     public int delete(int bno) {
-        discussionBoardDAO.delete(bno);
-        return 1;
+       return discussionBoardDAO.delete(bno);
     }
 
-    public int hit(DiscussionBoardDTO discussionBoardDTO) {
-        return 0;
+    public int hit(int bno) {
+        return discussionBoardDAO.hit(bno);
     }
 
     public int countBoard(Criteria cri){

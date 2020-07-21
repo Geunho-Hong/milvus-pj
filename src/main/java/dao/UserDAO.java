@@ -1,11 +1,11 @@
 package dao;
 
-import domain.Criteria;
 import domain.LoginDTO;
 import domain.UserDTO;
-
+import service.Criteria;
 import java.util.List;
 import java.util.Map;
+
 
 public interface UserDAO {
 
@@ -15,11 +15,11 @@ public interface UserDAO {
 
     public UserDTO getUserId(UserDTO userDTO);
 
-    public boolean getUserPw(UserDTO userDTO);
+    public String getUserPassword(UserDTO userDTO);
 
     public int deleteAllMember(String userId);
 
-    public int changeUserPw(UserDTO userDTO);
+    public int changePw(Map<String,Object> userMap);
 
     public List<UserDTO> getUserList(Criteria cri);
 

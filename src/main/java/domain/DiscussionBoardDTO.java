@@ -15,15 +15,15 @@ public class DiscussionBoardDTO {
     private String title;
     private String content;
     private Date regdate;
-    private Integer pw;
+    private Integer hit;
 
-    public DiscussionBoardDTO(Integer bno, String userId, String title, String content, Date regdate, Integer pw){
+    public DiscussionBoardDTO(Integer bno, String userId, String title, String content, Date regdate, Integer hit){
         this.bno = bno;
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.regdate = regdate;
-        this.pw = pw;
+        this.hit = hit;
     }
 
 }

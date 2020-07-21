@@ -1,6 +1,5 @@
 package controller;
 
-import domain.Criteria;
 import domain.DiscussionBoardDTO;
 import domain.DiscussionReplyDTO;
 import domain.PageDTO;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import service.Criteria;
 import service.DiscussionBoardService;
 import java.util.List;
 
@@ -39,7 +39,9 @@ public class DiscussionBoardController {
     @GetMapping("/board/{bno}")
     public String detailBoard(@PathVariable String bno, Model model){
         log.info ("조회할 게시판 번호 : " + bno);
-        model.addAttribute("board",discussionBoardService.read(Integer.parseInt(bno)));
+        int bnoNum = Integer.parseInt(bno);
+        discussionBoardService.hit(bnoNum);
+        model.addAttribute("board",discussionBoardService.read(bnoNum));
         return "/discussion/read";
     }
 
@@ -109,6 +111,5 @@ public class DiscussionBoardController {
         discussionBoardService.deleteReply(rno);
         return new ResponseEntity("Success", HttpStatus.OK);
     }
-
 
 }

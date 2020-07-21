@@ -2,6 +2,7 @@ package domain;
 
 import lombok.Getter;
 import lombok.ToString;
+import service.Criteria;
 
 @Getter
 @ToString

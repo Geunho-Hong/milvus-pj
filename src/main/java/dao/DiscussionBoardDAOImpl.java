@@ -1,11 +1,11 @@
 package dao;
 
-import domain.Criteria;
 import domain.DiscussionBoardDTO;
 import domain.DiscussionReplyDTO;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import service.Criteria;
 import java.util.List;
 
 @Log4j
@@ -13,6 +13,7 @@ import java.util.List;
 public class DiscussionBoardDAOImpl implements DiscussionBoardDAO {
 
     private String namespace = "mapper.DiscussionBoardMapper";
+
     private final SqlSession sqlSession;
 
     public DiscussionBoardDAOImpl(SqlSession sqlsession){
@@ -29,17 +30,15 @@ public class DiscussionBoardDAOImpl implements DiscussionBoardDAO {
     }
 
     public int modify(DiscussionBoardDTO discussionBoardDTO) {
-        sqlSession.update(namespace + ".update",discussionBoardDTO);
-        return 1;
+        return sqlSession.update(namespace + ".update",discussionBoardDTO);
     }
 
     public int delete(int bno) {
-        sqlSession.delete(namespace + ".delete",bno);
-        return 1;
+        return sqlSession.delete(namespace + ".delete",bno);
     }
 
-    public int hit(DiscussionBoardDTO discussionBoardDTO) {
-        return 0;
+    public int hit(int bno) {
+        return sqlSession.update(namespace + ".boardHit",bno);
     }
 
     public int countBoard(Criteria cri) {
@@ -75,7 +74,4 @@ public class DiscussionBoardDAOImpl implements DiscussionBoardDAO {
         sqlSession.delete(namespace + ".deleteReply",rno);
     }
 
-    public void deleteAllReply(int bno) {
-
-    }
 }

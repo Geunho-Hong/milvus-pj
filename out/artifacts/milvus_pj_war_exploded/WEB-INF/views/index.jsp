@@ -13,7 +13,9 @@
 
     <div class ="container">
         <div class ="row">
-            안녕하세요 ${login.userId} 님 환영합니다 !
+            <c:if test = "${login ne null}">
+                안녕하세요 ${login.userId} 님 환영합니다 !
+            </c:if>
        </div>
     </div>
 

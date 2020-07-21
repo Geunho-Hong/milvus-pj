@@ -2,52 +2,54 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<html>
+<script src="/js/discussion/list.js"/>
 <head>
     <title>Title</title>
 </head>
+<html>
 <body>
 
 <%@ include file="../sidebar.jsp" %>
 
 <div class="container" style="margin-left:22%">
-    토론을 나누는 공간에 오신것을 환영합니다.
-    현재유저 : ${login.userId}
 
-    <table style="border:1px solid #ccc">
+    <table class="table">
         <colgroup>
-            <col width ="10%"/>
-            <col width="20%"/>
-            <col width="*"/>
-            <col width="15%"/>
-            <col width="20%"/>
+            <col width=10%;>
+            <col width=20%;>
+            <col width=40%;>
+            <col width=20%;>
+            <col width=10%;>
         </colgroup>
         <thead>
-        <tr>
-            <th scope="col">글번호</th>
-            <th scope="col">작성자</th>
-            <th scope="col">제목</th>
-            <th scope="col">작성일</th>
+        <tr id="title">
+            <td>번호</td>
+            <td>작성자</td>
+            <td>제목</td>
+            <td>작성일</td>
+            <td>조회수</td>
         </tr>
         </thead>
+
         <tbody>
-        <c:forEach items="${list }" var="board">
+        <c:forEach items="${list}" var="board">
             <tr>
-                <td>${board.bno}
+                <td>
                     <c:if test = "${login.auth eq 1}">
                         <input type="checkbox" name="checkArr" class="checkArr" data = "${board.bno}"/>
-                     </c:if>
-                </td>
-                <td>${board.userId }</td>
+                    </c:if>
+                    <c:out value="${board.bno }"></c:out></td>
                 <td>
-                    <a href="/discussion/board/${board.bno}">
-                        <c:out value="${board.title}"></c:out>
+                    <c:out value="${board.userId }"></c:out></td>
+                </td>
+                <td><a href="/discussion/board/${board.bno}">
+                     <c:out value="${board.title}"></c:out>
                     </a>
                 </td>
-                <td>${board.regdate }</td>
+                <td><c:out value="${board.regdate }"></c:out></td>
+                <td><c:out value="${board.hit }"></c:out></td>
             </tr>
         </c:forEach>
-
         </tbody>
     </table>
 
@@ -85,59 +87,5 @@
                value="${pageMaker.cri.perPageNum }">
     </form>
 </div>
-
 </body>
-<script type ="text/javascript">
-
-    $(document).ready(function () {
-
-        $('.paginate_button a').on("click",function(e){
-            e.preventDefault();
-
-            //var targetPage = $(this).attr("href");
-
-            var actionForm = $("#actionForm");
-
-            e.preventDefault();
-            actionForm.find('input[name=page]').val($(this).attr('href'));
-            actionForm.submit();
-        });
-
-        $("#deleteBtn").click(function(e) {
-
-            var result = confirm("체크 리스트를 삭제하시겠습니까?");
-
-            if($("input[name='checkArr']").is(":checked") == false){
-                alert("삭제할 게시글을 선택해 주세요");
-                return false;
-            }
-
-            if(result){
-
-                var checkArr = new Array();
-
-                $("input[name='checkArr']:checked").each(function () {
-                    checkArr.push($(this).attr("data"));
-                });
-
-                console.log(checkArr);
-
-               $.ajax({
-                    type: 'post',
-                    url : "/discussion/board/checked/delete",
-                    data: ({'checkArr' : checkArr}),
-                    success : function(){
-                        if(result == 1){
-                            alert("삭제 성공");
-                            location.href = "/discussion/list";
-                        }else{
-                            alert("삭제 실패");
-                        }
-                    }
-                })
-            }
-        });
-    });
-</script>
-
 </html>

@@ -1,8 +1,8 @@
 package service;
 
-import domain.Criteria;
 import domain.LoginDTO;
 import domain.UserDTO;
+import service.Criteria;
 import java.util.List;
 
 
@@ -14,14 +14,14 @@ public interface UserService {
 
     public UserDTO getUserId(UserDTO userDTO);
 
-    public boolean getUserPw(UserDTO userDTO);
-
     public int deleteAllMember(String string);
-
-    public int changeUserPw(UserDTO userDTO);
 
     public List<UserDTO> getUserList(Criteria cri);
 
     public int totalCount(Criteria cri);
+
+    public boolean checkPw(UserDTO currentUser,String currentPw);
+
+    public int changePw(UserDTO currentUser,String changePw);
 
 }

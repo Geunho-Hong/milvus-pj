@@ -1,4 +1,4 @@
-package domain;
+package service;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ public class Criteria {
         this.perPageNum = 10;
     }
 
-    public Criteria(int page,int perPageNum) {
+    public Criteria(int page, int perPageNum) {
         this.page = page;
         this.perPageNum = perPageNum;
     }
@@ -55,9 +55,5 @@ public class Criteria {
     public String toString() {
         return "Criteria [page =" + page + ", " + "perPageNum= "+ perPageNum +"]";
     }
-
-   /* public String[] getTypeArr() {
-        return type == null ? new String[] {}: type.split("");
-    }*/
 
 }

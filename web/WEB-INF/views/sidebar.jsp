@@ -23,7 +23,9 @@
     <div class="row info">
         <div class="col-md-12 font-12">
             <h3>
-                ${login.userId} 님 환영합니다
+                <c:if test = "${login ne null}">
+                    안녕하세요 ${login.userId} 님 환영합니다 !
+                </c:if>
             </h3>
         </div>
     </div>

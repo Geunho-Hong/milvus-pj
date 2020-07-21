@@ -33,9 +33,15 @@
         where userId = #{userId}
     </delete>
 
-    <update id="changePw">
+    <update id="changePw" parameterType="map">
         update tbl_user
         set pw = #{pw}
+        where userId = #{userId}
+    </update>
+
+    <update id ="setProfile">
+        update tbl_user
+        set profileImg = #{profileImg}
         where userId = #{userId}
     </update>
 
@@ -45,7 +51,7 @@
 			tbl_user
 		]]>
         <![CDATA[
-		order by name desc
+		order by join_date desc
 		limit #{pageStart}, #{perPageNum}
 		]]>
     </select>
@@ -53,6 +59,15 @@
     <select id ="totalCount" resultType="int">
         select count(*) from tbl_user
     </select>
+
+    <select id="checkPw" resultType="String">
+		SELECT
+		    pw
+		FROM
+		    tbl_user
+		WHERE
+		    userId = #{userId}
+	</select>
 
 </mapper>
 

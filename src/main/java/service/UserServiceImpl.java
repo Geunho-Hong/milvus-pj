@@ -1,12 +1,12 @@
 package service;
 
 import dao.UserDAO;
-import domain.Criteria;
 import domain.LoginDTO;
 import domain.UserDTO;
+import service.Criteria;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,18 +43,23 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUserId(userDTO);
     }
 
-    public boolean getUserPw(UserDTO userDTO) {
-        return false;
-    }
-
     public int deleteAllMember(String string) {
         userDAO.deleteAllMember(string);
         return 1;
     }
 
-    public int changeUserPw(UserDTO userDTO) {
-        userDAO.changeUserPw(userDTO);
-        return 1;
+    public boolean checkPw(UserDTO currentUser, String currentPw) {
+        String getPassword = userDAO.getUserPassword(currentUser);
+        log.info("CurrentPw " + currentPw); // currentPw는 input창에 입력한 비밀번호.
+        log.info("Service checkPw " + getPassword);
+        return getPassword.equals(currentPw);
+    }
+
+    public int changePw(UserDTO currentUser, String changePw) {
+        Map<String,Object> userMap = new HashMap<String, Object>();
+        userMap.put("userId",currentUser.getUserId());
+        userMap.put("pw",changePw);
+        return userDAO.changePw(userMap);
     }
 
     public List<UserDTO> getUserList(Criteria cri) {

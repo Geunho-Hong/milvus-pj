@@ -22,8 +22,7 @@
         update tbl_discussion_board
         set
             title = #{title},
-            content = #{content},
-            pw = #{pw}
+            content = #{content}
         where
             bno = #{bno}
     </update>
@@ -32,6 +31,12 @@
         delete from tbl_discussion_board
         where bno = #{bno}
     </delete>
+
+    <update id="boardHit" parameterType="int">
+        update tbl_discussion_board
+        set hit = hit + 1
+        where bno = #{bno}
+    </update>
 
     <select id ="getListWithPaging" resultType ="DiscussionBoardDTO">
         <![CDATA[
@@ -49,7 +54,6 @@
     <select id ="totalCount" resultType="int">
         SELECT COUNT(*) FROM tbl_discussion_board;
     </select>
-
 
     <insert id ="insertReply">
 		insert into tbl_reply_discussion(bno,userId,content)

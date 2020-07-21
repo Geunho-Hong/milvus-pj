@@ -1,13 +1,13 @@
 package dao;
 
-import domain.Criteria;
 import domain.LoginDTO;
 import domain.UserDTO;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
+import service.Criteria;
 import java.util.List;
+import java.util.Map;
 
 @Log4j
 @Repository
@@ -36,18 +36,19 @@ public class UserDAOImpl implements UserDAO {
         return sqlSession.selectOne(namespace + ".getUserId",userDTO);
     }
 
-    public boolean getUserPw(UserDTO userDTO) {
-        return false;
+    public String getUserPassword(UserDTO userDTO) {
+        log.info("DAO GetUserPW " + sqlSession.selectOne(namespace+".checkPw",userDTO));
+        return sqlSession.selectOne(namespace+".checkPw",userDTO);
     }
 
     public int deleteAllMember(String userId) {
-        sqlSession.delete(namespace +".deleteAllMember",userId);
-        return 1;
+        return sqlSession.delete(namespace +".deleteAllMember",userId);
     }
 
-    public int changeUserPw(UserDTO userDTO) {
-        sqlSession.update(namespace + ".changePw",userDTO);
-        return 1;
+    public int changePw(Map<String, Object> userMap) {
+        int result = 0;
+        log.info("DAO changePw " + userMap);
+        return sqlSession.update(namespace + ".changePw",userMap);
     }
 
     public List<UserDTO> getUserList(Criteria cri) {

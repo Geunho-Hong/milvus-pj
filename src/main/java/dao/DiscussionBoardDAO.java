@@ -1,9 +1,8 @@
 package dao;
 
-import domain.Criteria;
 import domain.DiscussionBoardDTO;
 import domain.DiscussionReplyDTO;
-
+import service.Criteria;
 import java.util.List;
 
 public interface DiscussionBoardDAO {
@@ -16,7 +15,7 @@ public interface DiscussionBoardDAO {
 
     public int delete(int bno);
 
-    public int hit(DiscussionBoardDTO discussionBoardDTO);
+    public int hit(int bno);
 
     public int countBoard(Criteria cri);
 
@@ -30,6 +29,5 @@ public interface DiscussionBoardDAO {
 
     public void deleteReply(int rno);
 
-    public void deleteAllReply(int bno);
 
 }

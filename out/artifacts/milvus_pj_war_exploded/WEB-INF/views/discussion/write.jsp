@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src = "https://code.jquery.com/jquery-3.1.1.js"></script>
+<script src="/js/discussion/write.js"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <html>
 <head>
@@ -45,33 +46,4 @@
         </div>
     </div>
 </body>
-
-<script type ="text/javascript">
-
-    $(document).ready(function(){
-        var writeForm = $("#writeForm");
-
-        $("#writeBtn").click(function (e) {
-
-            var userId = $("#userId").val();
-            var title = $("#title").val();
-            var content = $("#content").val();
-
-            if(title == '' || title == null){
-                alert("제목을 입력해 주세요");
-                return false;
-            }
-            if(content == '' || content == null){
-                alert("내용을 입력해 주세요");
-                return false;
-            }
-
-            console.log(userId);
-            console.log(title);
-            console.log(content);
-
-            writeForm.submit();
-        });
-    })
-</script>
 </html>

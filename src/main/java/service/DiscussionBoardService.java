@@ -1,6 +1,5 @@
 package service;
 
-import domain.Criteria;
 import domain.DiscussionBoardDTO;
 import domain.DiscussionReplyDTO;
 
@@ -16,7 +15,7 @@ public interface DiscussionBoardService {
 
     public int delete(int bno);
 
-    public int hit(DiscussionBoardDTO discussionBoardDTO);
+    public int hit(int bno);
 
     public int countBoard(Criteria cri);
 

@@ -1,6 +1,5 @@
 package controller;
 
-import domain.Criteria;
 import domain.LoginDTO;
 import domain.PageDTO;
 import domain.UserDTO;
@@ -8,6 +7,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import service.Criteria;
 import service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping("/register")
     public String getRegister(){
         log.info("getRegister");
-        return "/index";
+        return "/user/register";
     }
 
     @GetMapping("/modify")
@@ -36,13 +36,17 @@ public class UserController {
         return "/user/modify";
     }
 
-    @PostMapping("/modify")
-    public String modifyUser(UserDTO userDTO){
-        int result = userService.changeUserPw(userDTO);
-        if(result == 1){
-            log.info("비밀번호 변경 성공");
-        }else{
-            log.info("비밀번호 변경 실패");
+    @PostMapping("/changePw")
+    public String changePw(@RequestParam String currentPw, @RequestParam String pw, HttpSession session,
+                           Model model) {
+        UserDTO currentUser = (UserDTO)session.getAttribute("login");
+        log.info("CurrentUser " + currentUser);
+        if(userService.checkPw(currentUser, currentPw)) {
+            log.info("비밀번호 변경");
+            userService.changePw(currentUser,pw);
+        }else {
+            model.addAttribute("msg","비밀번호가 일치하지 않습니다");
+            return "/user/modify";
         }
         return "/index";
     }
@@ -50,6 +54,21 @@ public class UserController {
     @GetMapping("/login")
     public String login(){
         return "/user/login";
+    }
+
+    @GetMapping("/adminLogin")
+    public String adminLogin(String error, String logout, Model model){
+        log.info("Error " + error);
+        log.info("Logout " + logout);
+
+        if(error != null){
+            model.addAttribute("error", "관리자 계정을 확인해주세요");
+        }
+        if(logout != null){
+            model.addAttribute("logout","로그아웃");
+        }
+
+        return "/user/adminLogin";
     }
 
     @PostMapping("/login-post")
@@ -64,14 +83,21 @@ public class UserController {
         }else{
             log.info("Login Success " + currentUser.toString());
             model.addAttribute("userDTO", currentUser);
-            return "/user/login-post";
+            //return "/user/login-post";
+            return "/discussion/list";
         }
     }
 
+    @GetMapping("/profile")
+    public String profile(){
+        return "/user/profile";
+    }
+
     @PostMapping("/register")
-    public void registerMember(UserDTO userDTO){
+    public String registerMember(UserDTO userDTO){
         log.info("info User :" + userDTO.toString());
         userService.insertMember(userDTO);
+        return "/user/login";
     }
 
     @GetMapping("/logout")
@@ -114,5 +140,4 @@ public class UserController {
         }
         return 1;
     }
-
 }
