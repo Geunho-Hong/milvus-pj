@@ -14,6 +14,5 @@ buildNumber.properties
 
 /out/
 .idea/modules/
-
-*.class
 *.jar
+*.class
