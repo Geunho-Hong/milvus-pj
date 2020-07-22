@@ -1,12 +1,9 @@
 package controller;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import domain.LoginDTO;
 import domain.PageDTO;
 import domain.UserDTO;
 import lombok.extern.log4j.Log4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,19 +57,20 @@ public class UserController {
         return "/user/login";
     }
 
-    @GetMapping("/adminLogin")
+    /*@GetMapping("/adminLogin")*/
+    @GetMapping("/securityLogin")
     public String adminLogin(String error, String logout, Model model, Principal principal){
         log.info("Error " + error);
         log.info("Logout " + logout);
 
         if(error != null){
-            model.addAttribute("error", "관리자 계정을 확인해주세요");
+            model.addAttribute("error", "계정을 확인해 주세요");
         }
         if(logout != null){
             model.addAttribute("logout","로그아웃");
         }
 
-        return "/user/adminLogin";
+        return "/user/securityLogin";
     }
 
     @PostMapping("/login-post")

@@ -35,34 +35,48 @@
             </tr>
             <tr>
                 <th scope="row">내용</th>
-                <td><textarea cols="100" rows="20" id="CONTENTS" title="내용" readonly>
-                    ${board.content}
-                </textarea></td>
+                <td><textarea cols="100" rows="20" id="CONTENTS" title="내용" readonly>${board.content}</textarea></td>
             </tr>
             </tbody>
         </table>
         <a href="javascript:history.back()" id="list" class="btn">목록으로</a>
 
-       <c:if test = "${login.userId eq board.userId || login.auth eq 1}">
+       <%--<c:if test = "${login.userId eq board.userId || login.auth eq 1}">
             <button type = "button" id ="deleteBtn"
                     onclick="location.href='/discussion/board/update/${board.bno}'">수정</button>
-
+ㅡ
             <button type = "button" id ="deleteBtn"
                     onclick="location.href='/discussion/board/delete/${board.bno}'">삭제</button>
-        </c:if>
+        </c:if>--%>
 
-        <form action="/discussion/board/delete" method ="post">
-            <input type ="hidden" name ="userId" value ="${board.userId}"/>
-            <input type ="hidden" name ="bno" value ="${board.bno}"/>
-            <button>시큐리티 삭제</button>
-        </form>
+        <sec:authorize access ="isAuthenticated()">
+            <form action="/discussion/board/delete" method ="post">
+                <input type ="hidden" name ="userId" value ="${board.userId}"/>
+                <input type ="hidden" name ="bno" value ="${board.bno}"/>
+                <button>시큐리티 삭제</button>
+            </form>
 
+            <form action="/discussion/board/update" method ="get">
+                <input type ="hidden" name ="userId" value ="${board.userId}"/>
+                <input type ="hidden" name ="bno" value ="${board.bno}"/>
+                <button>시큐리티 수정</button>
+            </form>
+        </sec:authorize>
+
+ <%--       <button type = "button" id ="deleteBtn"
+                onclick="location.href='/discussion/board/update/${board.bno}'">수정</button>
+--%>
         <table>
             <c:if test="${login eq null }">
                 <tr>
                     <td>회원에게만 댓글 작성 권한이 있습니다.</td>
                 </tr>
             </c:if>
+            <sec:authorize access ="isAnonymous()">
+                <tr>
+                    <td>회원에게만 댓글 작성 권한이 있습니다.</td>
+                </tr>
+            </sec:authorize>
             <c:if test="${login ne null }">
                 <tr>
                     <td id="replyTitle">댓글 달기</td>

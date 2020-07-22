@@ -11,7 +11,7 @@
 <div class ="container" id="container">
 
     <div class ="row" id ="title">
-        관리자 계정 로그인
+        시큐리티 계정 로그인
         <h3><c:out value = "${error}"/></h3>
         <h3><c:out value = "${logout}"/></h3>
     </div>

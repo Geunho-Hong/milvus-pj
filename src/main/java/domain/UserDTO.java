@@ -1,7 +1,7 @@
 package domain;
 
 import lombok.*;
-
+import java.util.List;
 import java.sql.Date;
 
 @Getter
@@ -16,6 +16,7 @@ public class UserDTO {
     private Date join_date;
     private Integer auth;
     private String profileImg;
+    //private List<AuthDTO> authDTOList;
 
     @Builder
     public UserDTO(String userId, String pw, String name ,Date join_date ,Integer auth

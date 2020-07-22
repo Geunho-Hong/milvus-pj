@@ -12,13 +12,6 @@
 
 <%@ include file="../sidebar.jsp" %>
 
-<c:set var="security">
-
-</c:set>
-
-<sec:authentication property="principal.username"/>
-
-
 <div class="container" style="margin-left:22%">
 
     <table class="table">
@@ -43,9 +36,11 @@
         <c:forEach items="${list}" var="board">
             <tr>
                 <td>
-                    <c:if test = "${login.auth eq 1}">
+                    <sec:authorize access ="hasRole('ROLE_ADMIN')">
+                    <%--<c:if test = "${login.auth eq 1}">--%>
                         <input type="checkbox" name="checkArr" class="checkArr" data = "${board.bno}"/>
-                    </c:if>
+                    <%--</c:if>--%>
+                    </sec:authorize>
                     <c:out value="${board.bno }"></c:out></td>
                 <td>
                     <c:out value="${board.userId }"></c:out></td>
@@ -81,16 +76,23 @@
         </ul>
     </div>
 
-    <c:if test="${login ne null}">
+  <%--  <c:if test="${login ne null}">
         <button type="button" onclick="location.href='/discussion/register'">글 작성</button>
-    </c:if>
+    </c:if>--%>
+
+    <sec:authorize access ="isAuthenticated()">
+        <button type="button" onclick="location.href='/discussion/register'">글 작성</button>
+    </sec:authorize>
 
 
-    <sec:authentication property="principal.username"/>
-
-    <c:if test = "${login.auth eq 1}">
+    <sec:authorize access ="hasRole('ROLE_ADMIN')">
         <button type="button" id="deleteBtn">체크 삭제</button>
-    </c:if>
+    </sec:authorize>
+
+
+    <%--<c:if test = "${login.auth eq 1}">
+        <button type="button" id="deleteBtn">체크 삭제</button>
+    </c:if>--%>
 
     <form id="actionForm" action="/discussion/list" method="get">
         <input type="hidden" name="page" value="${pageMaker.cri.page }">

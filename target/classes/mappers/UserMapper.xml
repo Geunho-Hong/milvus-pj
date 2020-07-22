@@ -61,6 +61,32 @@
 		]]>
     </select>
 
+   <!-- <resultMap id="userMap" type="UserDTO">
+        <result column="userId" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="join_date" property="name"/>
+        <result column="enabled" property="enabled"/>
+        <collection property="auth" column ="authMap"/>
+    </resultMap>
+
+    <resultMap id="authMap" type="resultMap">
+        <result column="userId" property="userId"/>
+        <result column="auth" property="auth"/>
+    </resultMap>
+
+    <select id ="getUserList2" resultMap="userMap">
+        <![CDATA[
+        select u.userId,u.name,u.join_date,u.enabled,a.auth
+        from tbl_user u
+        left join tbl_authorities a
+        on u.userId = a.userId
+        ]]>
+        <![CDATA[
+		order by join_date desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
+    </select>-->
+
     <select id ="totalCount" resultType="int">
         select count(*) from tbl_user
     </select>

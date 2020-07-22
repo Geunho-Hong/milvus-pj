@@ -24,12 +24,12 @@
     <div class="row info">
         <div class="col-md-12 font-12">
             <h3>
-                <c:if test = "${login ne null}">
+                <%--<c:if test = "${login ne null}">
                     안녕하세요 ${login.userId} 님 환영합니다 !
-                </c:if>
-
-          <%--      시큐리티 <sec:authentication property="principal.username"/>--%>
-
+                </c:if>--%>
+                <sec:authorize access ="isAuthenticated()">
+                    <sec:authentication property="principal.username"/>
+                </sec:authorize>
             </h3>
         </div>
     </div>
@@ -39,20 +39,29 @@
                 <c:if test="${login eq null}">
                     <button type ="button" id="loginBtn" class ="btn btn-primary" onclick="location.href='/user/login'">Login</button>
                 </c:if>
-                <c:if test="${login.auth eq 1}">
+                <sec:authorize access ="isAnonymous()">
+                    <button type ="button" id="loginSBtn" class ="btn btn-primary" onclick="location.href='/user/securityLogin'">Security Login</button>
+                </sec:authorize>
+                <c:if test="${login.auth eq 1 }">
                     <button type ="button" id="adminBtn" class ="btn btn-primary" onclick="location.href='/user/list'">유저목록</button>
                 </c:if>
                 <c:if test="${login ne null}">
                     <button type ="button" class ="btn btn-primary" onclick="location.href='/user/logout'">LogOut</button>
                     <button class="btn btn-primary"  onclick="location.href='/user/modify'">비밀번호 수정</button>
                 </c:if>
-                <form action = "/user/log-out" method ="post">
-                    <input type ="hidden" name ="${_csrf.parameterName}" value ="${_csrf.token}" placeholder="시큐리티 out">
-                    <button>로그 아웃 시큐리티</button>
-                </form>
-                <c:if test = "${login eq null}">
+                <sec:authorize access ="isAuthenticated()">
+                    <form action = "/user/log-out" method ="post">
+                        <input type ="hidden" name ="${_csrf.parameterName}" value ="${_csrf.token}" placeholder="시큐리티 out">
+                        <button class ="btn btn-primary" id ="logOutSBtn">LogOut 시큐리티</button>
+                    </form>
+                    <button class="btn btn-primary"  onclick="location.href='/user/modify'">비밀번호 수정</button>
+                </sec:authorize>
+                <%--<c:if test = "${login eq null}">
                     <button type ="button" id ="registerBtn" class ="btn btn-primary" onclick="location.href='/user/register'">회원가입</button>
-                </c:if>
+                </c:if>--%>
+                <sec:authorize access ="isAnonymous()">
+                    <button type ="button" id ="registerBtn" class ="btn btn-primary" onclick="location.href='/user/register'">회원가입</button>
+                </sec:authorize>
         </div>
     </div>
 

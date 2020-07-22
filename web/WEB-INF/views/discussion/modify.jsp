@@ -22,6 +22,7 @@
                 <th scope="row">번호</th>
                 <td>${board.bno}</td>
                 <input type="hidden" name ="bno" value = "${board.bno}"/>
+                <input type="hidden" name ="userId" value = "${board.userId}"/>
             </tr>
             <tr>
                 <th scope="row">제목</th>
@@ -33,9 +34,7 @@
             </tr>
             <tr>
                 <th scope="row">내용</th>
-                <td><textarea cols="100" rows="20" id="content" name="content" title="내용">
-                    ${board.content}
-                </textarea></td>
+                <td><textarea cols="100" rows="20" id="content" name="content" title="내용">${board.content}</textarea></td>
             </tr>
             </tbody>
         </table>

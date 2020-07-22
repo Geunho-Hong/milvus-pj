@@ -6,11 +6,14 @@ import domain.PageDTO;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.Criteria;
 import service.DiscussionBoardService;
+
+import java.security.Principal;
 import java.util.List;
 
 @Log4j
@@ -37,7 +40,8 @@ public class DiscussionBoardController {
     }
 
     @GetMapping("/board/{bno}")
-    public String detailBoard(@PathVariable String bno, Model model){
+    public String detailBoard(@PathVariable String bno, Model model,
+                              Principal principal){
         log.info ("조회할 게시판 번호 : " + bno);
         int bnoNum = Integer.parseInt(bno);
         discussionBoardService.hit(bnoNum);
@@ -52,25 +56,85 @@ public class DiscussionBoardController {
         return "/discussion/list";
     }
 
-    @GetMapping("/board/update/{bno}")
-    public String getUpdateBoard(@PathVariable String bno, Model model){
+    /*@GetMapping("/board/update/{bno}")
+    public String getUpdateBoard(@PathVariable String bno, Model model,Principal principal,
+                                 Authentication auth){
+        log.info("조회 게시판 번호 " + bno);
+
         model.addAttribute("board",discussionBoardService.read(Integer.parseInt(bno)));
         log.info("글이 수정되었습니다");
         return "/discussion/modify";
+    }*/
+
+    @GetMapping("/board/update")
+    public String getUpdateBoard(DiscussionBoardDTO boardDTO,Principal principal,
+                                 Authentication auth,Model model){
+        String authUser = auth.getAuthorities().toString();
+
+        log.info("게시글 작성자 게시글 번호 " + boardDTO.getUserId());
+        log.info("현재 접속 유저 " + principal.getName());
+        log.info("사용자 권한 " + authUser);
+
+        if(boardDTO.getUserId().equals(principal.getName())
+                || authUser.equals("[ROLE_ADMIN]")){
+            /*
+             현재 접속한 사용자와 게시글의 작성자가 같거나 ADMIN 일
+             경우만 수정페이지에 조회한다.
+             */
+            model.addAttribute("board",discussionBoardService.read(boardDTO.getBno()));
+            log.info("수정 페이지 접속");
+            return "/discussion/modify";
+
+        }else{
+            return "redirect:/accessError";
+        }
     }
 
     @PostMapping("/board/update")
-    public String updateBoard(DiscussionBoardDTO discussionBoardDTO){
-        log.info("수정할 게시글 번호 " + discussionBoardDTO.getBno());
-        discussionBoardService.modify(discussionBoardDTO);
-        return "redirect:/discussion/list";
+    public String updateBoard(DiscussionBoardDTO boardDTO,Principal principal,
+                              Authentication auth){
+        String authUser = auth.getAuthorities().toString();
+
+        log.info("게시글 작성자 게시글 번호 " + boardDTO.getUserId());
+        log.info("현재 접속 유저 " + principal.getName());
+        log.info("사용자 권한 " + authUser);
+
+        if(boardDTO.getUserId().equals(principal.getName())
+                || authUser.equals("[ROLE_ADMIN]")){
+            // 현재 접속한 사용자와 게시글의 작성자가 같거나 ADMIN 일 경우만 수정한다.
+            log.info("Success Modify");
+            discussionBoardService.modify(boardDTO);
+            return "redirect:/discussion/list";
+        }else{
+            return "redirect:/accessError";
+        }
     }
 
-    @GetMapping("/board/delete/{bno}")
+    @PostMapping("/board/delete")
+    public String deleteBoard(DiscussionBoardDTO boardDTO, Principal principal,
+                               Authentication auth){
+
+        String authUser = auth.getAuthorities().toString();
+
+        log.info("게시글 작성자 " + boardDTO.getUserId());
+        log.info("현재 접속 유저 " + principal.getName());
+        log.info("사용자 권한 " + authUser);
+
+        if(boardDTO.getUserId().equals(principal.getName())
+            || authUser.equals("[ROLE_ADMIN]")){
+            // 현재 접속한 사용자와 게시글의 작성자가 같거나 ADMIN 일 경우만 삭제한다.
+            discussionBoardService.delete(boardDTO.getBno());
+            log.info("Success Delete");
+            return "redirect:/discussion/list";
+        }else{
+            return "redirect:/accessError";
+        }
+    }
+
+  /*  @GetMapping("/board/delete/{bno}")
     public String deleteBoard(@PathVariable String bno){
         log.info("삭제할 게시글 번호: " + bno);
         int result = discussionBoardService.delete(Integer.parseInt(bno));
-
 
         if(result == 1 ){
             log.info("삭제 성공");
@@ -79,14 +143,7 @@ public class DiscussionBoardController {
         }
         return "redirect:/discussion/list";
     }
-
-    @PostMapping("/board/delete")
-    public String deleteBoard2(DiscussionBoardDTO boardDTO){
-        log.info("Discussion board delete " + boardDTO.toString());
-
-        return "1";
-    }
-
+*/
 
     @ResponseBody
     @PostMapping("/board/checked/delete")

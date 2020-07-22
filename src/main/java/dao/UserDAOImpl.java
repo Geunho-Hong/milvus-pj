@@ -58,6 +58,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<UserDTO> getUserList(Criteria cri) {
+        //log.info("Join " + sqlSession.selectList(namespace+ ".getUserList2",cri));
         return sqlSession.selectList(namespace + ".getUserList",cri);
     }
 

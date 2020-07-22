@@ -13,6 +13,7 @@
     <div class ="container"style="margin-left:22%">
         <form action ="/discussion/register" method ="post" id="writeForm" name="writeForm">
             <!--<input type = "hidden" name ="userId" value="${login.userId}"/>-- InterCeptor-->
+
             <input type = "hidden" name ="userId" value="<sec:authentication property="principal.username"/>"/>
 
             <table class="board_view">
@@ -32,9 +33,7 @@
                 </tr>
                 <tr>
                     <th scope="row">내용</th>
-                    <td><textarea cols="100" rows="20" name ="content" id="content" title="내용">
-                        ${board.content}
-                    </textarea></td>
+                    <td><textarea cols="100" rows="20" name ="content" id="content" title="내용"></textarea></td>
                 </tr>
                 </tbody>
             </table>
